@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: member
+
+server:
+  port: 8762
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 3
+    lease-expiration-duration-in-seconds: 10
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    registry-fetch-interval-seconds: 10
+    disable-delta: true
+  serviceUrl:
+    defaultZone: http://localhost:8761/eureka/

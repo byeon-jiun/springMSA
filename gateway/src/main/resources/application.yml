@@ -1,0 +1,57 @@
+server:
+  port: 8765
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      default-filters:
+        - name: GlobalFilter
+          args:
+            baseMessage: Spring Cloud Gateway GlobalFilter
+            preLogger: false
+            postLogger: false
+      routes:
+        - id: member
+          uri: http://localhost:8762/
+          predicates:
+            - Path=/member/**
+          filters:
+            - name: MemberFilter
+              args:
+                baseMessage: Spring Cloud Gateway MemberFilter
+                preLogger: true
+                postLogger: true
+        - id: reservation
+          uri: http://localhost:8763/
+          predicates:
+            - Path=/reservation/**
+          filters:
+            - name: ReservationFilter
+              args:
+                baseMessage: Spring Cloud Gateway ReservationFilter
+                preLogger: true
+                postLogger: true
+        - id: game
+          uri: http://localhost:8764/
+          predicates:
+            - Path=/game/**
+          filters:
+            - name: GameFilter
+              args:
+                baseMessage: Spring Cloud Gateway GameFilter
+                preLogger: true
+                postLogger: true
+eureka:
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 3
+    lease-expiration-duration-in-seconds: 10
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    registry-fetch-interval-seconds: 10
+    disable-delta: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
